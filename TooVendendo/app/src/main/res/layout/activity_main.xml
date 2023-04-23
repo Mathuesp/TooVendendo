@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:backgroundTint="@color/white">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="VENDA"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nome" />
+
+            <EditText
+                android:id="@+id/edNome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CPF" />
+
+            <EditText
+                android:id="@+id/edCpf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Item" />
+
+            <EditText
+                android:id="@+id/edItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quantidade Item" />
+
+            <EditText
+                android:id="@+id/edQtdItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Valor Unitário" />
+
+            <EditText
+                android:id="@+id/edVlrUnit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Item"
+                android:textStyle="bold"
+                android:backgroundTint="@color/teal_700"
+                android:padding="10dp"
+                android:layout_gravity="right"
+                android:layout_margin="10dp"
+                android:id="@+id/btAddItem"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvItensPedido"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Valor Total"
+                android:enabled="false"/>
+
+            <EditText
+                android:id="@+id/edVlrTotal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quantidade Itens"/>
+
+            <EditText
+                android:id="@+id/edQtdItens"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Forma de Pagamento" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="À Vista"
+                    android:textStyle="bold"
+                    android:backgroundTint="@color/teal_700"
+                    android:padding="10dp"
+                    android:layout_gravity="left"
+                    android:layout_margin="40dp"
+                    android:id="@+id/btAvista"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="À Prazo"
+                    android:textStyle="bold"
+                    android:backgroundTint="@color/teal_700"
+                    android:padding="10dp"
+                    android:layout_gravity="right"
+                    android:layout_margin="40dp"
+                    android:id="@+id/btAprazo"/>
+            </LinearLayout>
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quantidade Parcelas"
+                android:visibility="gone"
+                android:id="@+id/tvQtdParcelas"/>
+
+            <EditText
+                android:id="@+id/edQtdParcelas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tvVlrParcelas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Valor Parcelas"
+                android:visibility="gone"/>
+
+            <EditText
+                android:id="@+id/edVlrParcelas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:enabled="false"/>
+
+            <TextView
+                android:id="@+id/tvVlrPedido"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Valor Total Pedido"
+                android:visibility="gone"/>
+
+            <EditText
+                android:id="@+id/edVlrPedido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:enabled="false"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Finalizar Pedido"
+                android:textStyle="bold"
+                android:backgroundTint="@color/teal_700"
+                android:padding="10dp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:id="@+id/btConcluirPedido"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
