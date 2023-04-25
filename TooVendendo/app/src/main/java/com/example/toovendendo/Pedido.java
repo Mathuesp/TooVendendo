@@ -1,5 +1,9 @@
 package com.example.toovendendo;
 
+import static java.lang.Math.round;
+
+import android.widget.EditText;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -131,7 +135,7 @@ public class Pedido {
             resultado += (item.getQuantidade() * item.getVlUnit());
         }
 
-        setVlTotal((double) Math.round(resultado));
+        setVlTotal(resultado);
     }
 
     public void calculaQtdItens(){
@@ -158,14 +162,14 @@ public class Pedido {
     }
 
     public void calculaVlAVista(){
-        setVlPedido((double) Math.round(getVlTotal()*.95));
+        setVlPedido(getVlTotal()*.95);
     }
 
     public void calculaVlAPrazo(){
-        setVlPedido((double) Math.round(getVlTotal()*1.05));
+        setVlPedido(getVlTotal()*1.05);
     }
 
     public void calculaVlParcela(){
-        setVlParcelas((double) Math.round(getVlPedido()/getQtdParcelas()));
+        setVlParcelas(round(getVlPedido()/getQtdParcelas()));
     }
 }

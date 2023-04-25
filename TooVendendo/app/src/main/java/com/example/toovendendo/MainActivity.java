@@ -45,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText edVlrPedido;
     private Button btConcluirPedido;
     private Button btVoltar;
-    private double AuxVlrPedido;
-    private int AuxQtdItens;
 
     private ArrayList<Pedido> pedidos = new ArrayList<>();
     private Pedido pedido;
@@ -133,6 +131,9 @@ public class MainActivity extends AppCompatActivity {
                             edQtdItens.setText(String.valueOf(pedido.getQtdItens()));
                             edVlrPedido.setText(String.valueOf(pedido.getVlPedido()));
 
+                            btConcluirPedido.setVisibility(View.GONE);
+                            btAddItem.setEnabled(false);
+
                             btVoltar.setVisibility(View.VISIBLE);
 
                             if (pedido.getQtdParcelas()>0){
@@ -183,17 +184,35 @@ public class MainActivity extends AppCompatActivity {
         edQtdParcelas.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                verificaParcelas();
+                if (edQtdParcelas.getVisibility() == View.VISIBLE) {
+                    if (!pegaString(edQtdParcelas).equals("")) {
+                        if (Integer.parseInt(pegaString(edQtdParcelas)) > 0) {
+                            verificaParcelas();
+                        }
+                    }
+                }
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                verificaParcelas();
+                if (edQtdParcelas.getVisibility() == View.VISIBLE) {
+                    if (!pegaString(edQtdParcelas).equals("")) {
+                        if (Integer.parseInt(pegaString(edQtdParcelas)) > 0) {
+                            verificaParcelas();
+                        }
+                    }
+                }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                verificaParcelas();
+                if (edQtdParcelas.getVisibility() == View.VISIBLE) {
+                    if (!pegaString(edQtdParcelas).equals("")) {
+                        if (Integer.parseInt(pegaString(edQtdParcelas)) > 0) {
+                            verificaParcelas();
+                        }
+                    }
+                }
             }
         });
 
@@ -339,40 +358,51 @@ public class MainActivity extends AppCompatActivity {
 
     private void concluirPedido() {
         try {
-            String nome = edNome.getText().toString();
-            String cpf = edCpf.getText().toString();
-            String qtdItens = edQtdItens.getText().toString();
-            String vlrPedido = edVlrPedido.getText().toString();
+            if (edQtdParcelas.getVisibility() == View.VISIBLE) {
+                if (!pegaString(edQtdParcelas).equals("")){
+                    if (Integer.parseInt(pegaString(edQtdParcelas)) <= 0){
+                        edQtdParcelas.setError("Informe um valor maior do que 0!");
+                    }else {
+                        Toast.makeText(this, "Pedido para o cliente "
+                                        + pedido.getNome()
+                                        + " com "
+                                        + String.valueOf(pedido.getQtdItens())
+                                        + " itens totalizando "
+                                        + String.valueOf(pedido.getVlPedido())
+                                        + ", finalizado com sucesso!"
+                                , Toast.LENGTH_LONG).show();
 
-            Toast.makeText(this, "Pedido para o cliente "
-                            + pedido.getNome()
-                            + " com "
-                            + String.valueOf(pedido.getQtdItens())
-                            + " itens totalizando "
-                            + String.valueOf(pedido.getVlPedido())
-                            + ", finalizado com sucesso!"
-                    , Toast.LENGTH_LONG).show();
+                        limparCampos();
 
-            edNrPedido.setText("");
-            edNome.setText("");
-            edCpf.setText("");
-            edItem.setText("");
-            edQtdItem.setText("");
-            edVlrUnit.setText("");
-            tvItensPedido.setText("");
-            edQtdItens.setText("");
-            edVlrTotal.setText("");
-            edQtdParcelas.setText("");
-            edVlrParcelas.setText("");
-            edVlrPedido.setText("");
+                        pedidos.add(pedido);
 
-            pedidos.add(pedido);
+                        sclPedido.setVisibility(View.GONE);
+                        lytTpPedido.setVisibility(View.VISIBLE);
 
-            sclPedido.setVisibility(View.GONE);
-            lytTpPedido.setVisibility(View.VISIBLE);
+                        tvPedidos.setText(listarPedidos());
+                    }
+                }else {
+                    edQtdParcelas.setError("Informe um valor válido!");
+                }
+            }else {
+                Toast.makeText(this, "Pedido para o cliente "
+                                + pedido.getNome()
+                                + " com "
+                                + String.valueOf(pedido.getQtdItens())
+                                + " itens totalizando "
+                                + String.valueOf(pedido.getVlPedido())
+                                + ", finalizado com sucesso!"
+                        , Toast.LENGTH_LONG).show();
 
-            tvPedidos.setText(listarPedidos());
+                limparCampos();
 
+                pedidos.add(pedido);
+
+                sclPedido.setVisibility(View.GONE);
+                lytTpPedido.setVisibility(View.VISIBLE);
+
+                tvPedidos.setText(listarPedidos());
+            }
         } catch (Exception ex) {
             Log.e("ERRO", ex.getMessage());
         }
@@ -382,12 +412,12 @@ public class MainActivity extends AppCompatActivity {
         String resultado = "";
 
         for (Pedido pedido:pedidos) {
-            resultado += "Cliente: "
+            resultado += "Pedido: "
+                    + pedido.getNrPedido()
+                    + " | Cliente: "
                     + pedido.getNome()
                     + " | CPF: "
                     + pedido.getCpf()
-                    + " | Qtd. Itens: "
-                    + pedido.getQtdItens()
                     + " | Valor Pedido: R$ "
                     + pedido.getVlPedido()
                     + "\n";
@@ -399,5 +429,26 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed(){
         sclPedido.setVisibility(View.GONE);
         lytTpPedido.setVisibility(View.VISIBLE);
+        limparCampos();
+        pedido = null;
+    }
+
+    private String pegaString(EditText ed){
+        return ed.getText().toString().trim();
+    }
+
+    private void limparCampos(){
+        edNrPedido.setText("");
+        edNome.setText("");
+        edCpf.setText("");
+        edItem.setText("");
+        edQtdItem.setText("");
+        edVlrUnit.setText("");
+        tvItensPedido.setText("");
+        edQtdItens.setText("");
+        edVlrTotal.setText("");
+        edQtdParcelas.setText("");
+        edVlrParcelas.setText("");
+        edVlrPedido.setText("");
     }
 }
